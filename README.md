@@ -19,3 +19,10 @@ See: https://docs.python.org/3/library/venv.html
 ### Installing dependencies
 To install dependencies:
 `pip install -r requirements.txt`
+
+### Credentials
+iRacing credentials are needed in order to login to the API. 
+
+Define the following environment variables: 
+`IRAPI_USR` for username
+`IRAPI_PWD` for password
