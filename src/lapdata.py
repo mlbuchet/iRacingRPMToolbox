@@ -9,10 +9,6 @@ class irLapData:
     def get_laps(self, subsession_id, simsession_number = 0):
         results = self.client.get_result(subsession_id)
         drivers = results["session_results"][len(results["session_results"])-1]["results"]
-#        f = open("results.json","r")
-#        f.write(json.dumps(drivers))
-#        drivers = json.loads(f.read())
-#        print(drivers)
 
         exploited_laps = []
 
