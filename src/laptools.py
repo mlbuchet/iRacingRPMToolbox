@@ -2,6 +2,8 @@
 Returns the fastest lap of a driver from an array of laps.
 If no id is provided for the driver, it returns the fastest lap of the race augmented with the id of the driver having done it.
 Only clean laps are counted.
+
+WARNING: Calling this function without customer id will modified the returned lap with an extra field of data.
 '''
 def get_best_lap(array_laps, cust_id = None):
     # Looking for the fastest overall lap
@@ -24,3 +26,16 @@ def get_best_lap(array_laps, cust_id = None):
                         minlap = lap
 
     return minlap
+
+"""
+Sorts an array of laps and return the sorted array.
+"""
+def sort_laps(laps):
+    aux = []
+    for lap in laps:
+        aux.append((lap["lap_time"], lap))
+    aux.sort(reverse = True)
+    sorted = []
+    while aux:
+        sorted.append(aux.pop()[1])
+    return sorted
