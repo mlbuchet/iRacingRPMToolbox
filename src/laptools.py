@@ -39,3 +39,19 @@ def sort_laps(laps):
     while aux:
         sorted.append(aux.pop()[1])
     return sorted
+
+"""
+Computes the average time of the best laps of an array.
+top indicates the number of laps to be considered.
+If top is not provided then it computes the average of all laps.
+"""
+def compute_average(laps, top = None):
+    if top == None:
+        top = len(laps)
+    sorted = sort_laps(laps)
+    index = 0
+    sum = 0
+    while index < top:
+        sum += sorted.pop(0)["lap_time"]
+        index += 1
+    return sum/top
