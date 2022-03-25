@@ -3,7 +3,7 @@ Returns the fastest lap of a driver from an array of laps.
 If no id is provided for the driver, it returns the fastest lap of the race augmented with the id of the driver having done it.
 Only clean laps are counted.
 
-WARNING: Calling this function without customer id will modified the returned lap with an extra field of data.
+WARNING: Calling this function without customer id will modifiy the returned lap with an extra field of data.
 '''
 def get_best_lap(array_laps, cust_id = None):
     # Looking for the fastest overall lap
@@ -55,3 +55,15 @@ def compute_average(laps, top = None):
         sum += sorted.pop(0)["lap_time"]
         index += 1
     return sum/top
+
+"""
+Computes the average time of the best laps for each driver.
+top indicates the number of laps to be considered.
+If top is not provided then it computes the average of all laps.
+"""
+def compute_averages(array_laps, top = None):
+    averages = []
+    for laps in array_laps:
+        if top == None or len(laps["laps"]) >= top:
+            averages.append({"cust_id":laps["cust_id"], "average":compute_average(laps["laps"], top)})
+    return averages
