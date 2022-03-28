@@ -8,9 +8,6 @@ class irDataClient:
 
         self._login(username=username, password=password)
 
-        self.cars = self.get_cars()
-        self.tracks = self.get_tracks()
-
     def _login(self, username=None, password=None):
         if not username or not password:
             raise RuntimeError("Please supply a username and password")
