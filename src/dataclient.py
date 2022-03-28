@@ -95,7 +95,7 @@ class irDataClient:
             payload["team_id"] = team_id
 
         resource = self._get_resource("/data/results/lap_data", payload=payload)
-        return self._get_chunks(resource['chunk_info'])
+        return self._get_chunks(resource['chunk_info']) if 'chunk_info' in resource else []
 
     def get_member(self, cust_id=None, include_licenses=False):
         if not cust_id:
