@@ -115,3 +115,34 @@ def select_events(array_laps, event):
                     lap["cust_id"] = laps["cust_id"]
                     eventful.append(lap)
     return eventful
+
+def build_name_table(results):
+    """
+    Constructs a table associating a customer id and the name of the driver.
+    Requires a result table as input.
+    """
+    drivers = []
+    for driver in results["session_results"][len(results["session_results"])-1]["results"]:
+        dvr = {"cust_id":driver["cust_id"], "display_name":driver["display_name"]}
+        drivers.append(dvr)
+    return drivers
+
+def find_name_in_table(name_table, cust_id):
+    """
+    Finds the name corresponding to an id in a name table
+    """
+    for entry in name_table:
+        if entry["cust_id"] == cust_id:
+            return entry["display_name"]
+    return None
+
+def noted_incidents(array_laps, name_table):
+    """
+    Builds the list of car contacts in a race
+    """
+    eventful = select_events(array_laps, "car contact")
+    incidents = []
+    for evt in eventful:
+        exch = {"lap_number": evt["lap_number"], "display_name": find_name_in_table(name_table, evt["cust_id"])}
+        incidents.append(exch)
+    return incidents
