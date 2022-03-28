@@ -100,3 +100,18 @@ def evaluate_drivers(array_laps, fraction = .5, gold_threshold = .99, silver_thr
         else:
             grades.append({"cust_id":avg["cust_id"], "grade":"Bronze"})
     return grades
+
+def select_events(array_laps, event):
+    """
+    Extract the list of all laps where a given event has happened.
+
+    WARNING: Eventful laps will be modified with an extra field of data containing the customer id.
+    """
+    eventful = []
+    for laps in array_laps:
+        for lap in laps["laps"]:
+            for evt in lap["lap_events"]:
+                if evt == event :
+                    lap["cust_id"] = laps["cust_id"]
+                    eventful.append(lap)
+    return eventful
