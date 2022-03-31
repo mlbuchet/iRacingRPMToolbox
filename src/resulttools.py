@@ -35,3 +35,33 @@ def find_name_in_table(name_table, cust_id):
         if entry["cust_id"] == cust_id:
             return entry["display_name"]
     return None
+
+def get_race_results(results, drivers_db):
+    """
+    Returns relevant information stored in the results tab of the results table.
+    Infos currently exported:
+        - cust_id: Customer id.
+        - finish_position: Finishing postion after the race.
+        - laps_complete: Number of laps completed in the race.
+        - starting_position: Starting position in the race.
+        - incidents: Number of incidents points during the race.
+        - incidents_per_lap: Average number of incidents per lap.
+        - progression: Gained/Lost positions during the race.
+    """
+    race = []
+    for session in results["session_results"]:
+        if session["simsession_name"] == "RACE":
+            for entry in session["results"]:
+                infos = ({
+                    "cust_id": entry["cust_id"],
+                    "finish_position": entry["finish_position"],
+                    "laps_complete": entry["laps_complete"],
+                    "starting_position": entry["starting_position"],
+                    "incidents": entry["incidents"]})
+                if infos["laps_complete"] > 0:
+                    infos["incidents_per_lap"] = infos["incidents"] / infos["laps_complete"]
+                else:
+                    infos["incidents_per_lap"] = -1
+                infos["progression"] = infos["starting_position"] - infos["finish_position"]
+                race.append(infos)
+    return race
