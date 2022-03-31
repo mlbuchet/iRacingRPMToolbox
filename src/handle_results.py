@@ -11,16 +11,21 @@ import laptools
 import resulttools
 import leaguetools
 import jsonexport
+import argparse
 
-subsession_id = sys.argv[1]
+parser = argparse.ArgumentParser(description='Computes statistics for a race.')
+parser.add_argument('subsession_id', help="Session ID of the race")
+parser.add_argument('output_file', help="Name of the file to be written")
+args = parser.parse_args()
+
 cred = credentials.get_credentials()
 client = irDataClient(cred["user"], cred["pwd"])
 lpd = irLapData(client)
-results = client.get_result(subsession_id)
+results = client.get_result(args.subsession_id)
 print("Results retrieved")
-laps = lpd.get_laps(subsession_id)
+laps = lpd.get_laps(args.subsession_id)
 print("Lapdata retrieved")
 league = client.get_league(results["league_id"])
 print("League retrieved")
 db = leaguetools.build_drivers_database(league)
-jsonexport.export_to_json(sys.argv[2], db, results, laps)
+jsonexport.export_to_json(args.output_file, db, results, laps)
