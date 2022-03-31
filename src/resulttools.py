@@ -51,7 +51,8 @@ def get_race_results(results, drivers_db):
                     "finish_position": entry["finish_position"],
                     "laps_complete": entry["laps_complete"],
                     "starting_position": entry["starting_position"],
-                    "incidents": entry["incidents"]})
+                    "incidents": entry["incidents"],
+                    "car_id": entry["car_id"]})
                 # Incidents per laps
                 if infos["laps_complete"] > 0:
                     infos["incidents_per_lap"] = infos["incidents"] / infos["laps_complete"]
