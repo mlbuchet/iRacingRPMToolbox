@@ -11,7 +11,8 @@ def export_to_json(output_file, drivers_db, results, array_laps):
     Exports the driver list with useful informations for display.
     """
     qualifying_table = resulttools.get_qualifying_results(results)
-    export = qualifying_table
+    race_table = resulttools.get_race_results(results, drivers_db)
+    export = merge_tables(race_table, qualifying_table)
     export = introduce_drivers_info(drivers_db, export)
     fw = open(output_file,"w")
     fw.write(json.dumps(export))
@@ -29,3 +30,10 @@ def introduce_drivers_info(drivers_db, array):
                 entry["car_number"] = driver["car_number"]
                 entry["class"] = driver["class"]
     return array
+
+def merge_tables(table1, table2):
+    for entry1 in table1:
+        for entry2 in table2:
+            if entry2["cust_id"] == entry1["cust_id"]:
+                entry1 = entry2 | entry1
+    return table1
