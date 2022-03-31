@@ -1,6 +1,7 @@
 def get_best_lap(array_laps, cust_id = None):
     '''
     Returns the fastest lap of a driver from an array of laps.
+    Requires an array of laps without untimed laps.
     If no id is provided for the driver, it returns the fastest lap of the race augmented with the id of the driver having done it.
     Only clean laps are counted.
 
@@ -46,6 +47,7 @@ def compute_average(laps, top = None):
     Computes the average time of the best laps of an array.
     top indicates the number of laps to be considered.
     If top is not provided then it computes the average of all laps.
+    Requires a clean array of laps without untimed laps.
     """
     if top == None:
         top = len(laps)
@@ -63,6 +65,7 @@ def compute_averages(array_laps, top = None):
     Computes the average time of the best laps for each driver.
     top indicates the number of laps to be considered.
     If top is not provided then it computes the average of all laps.
+    Requires a clean array of laps without untimed laps.
     """
     averages = []
     for laps in array_laps:
@@ -73,6 +76,7 @@ def compute_averages(array_laps, top = None):
 def compute_median(averages):
     """
     Computes the median of an array of averages.
+    Requires a clean array of laps without untimed laps.
     """
     sorted = []
     for avg in averages:
@@ -87,6 +91,7 @@ def evaluate_drivers(array_laps, fraction = .5, gold_threshold = .99, silver_thr
         If a driver has completed less than the required number of laps, it is not evaluated.
     gold_threshold: percentage of the median average lap time to be classed as a gold driver.
     silver_threshold: percentage of the median average lap time to be classed as a silver driver.
+    Requires a clean array of laps without untimed laps.
     """
     top = len(array_laps[0]["laps"]) * fraction
     averages = compute_averages(array_laps, top)
@@ -146,3 +151,16 @@ def noted_incidents(array_laps, name_table):
         exch = {"lap_number": evt["lap_number"], "display_name": find_name_in_table(name_table, evt["cust_id"])}
         incidents.append(exch)
     return incidents
+
+def remove_untimed_laps(array_laps):
+    """
+    Takes an array of laps and return a cleaned version of the array with untimed laps removed.
+    """
+    clean = []
+    for laps in array_laps:
+        laps_driver = {"cust_id":laps["cust_id"], "laps":[]}
+        for lap in laps:
+            if lap["lap_time"] > 0:
+                laps_driver["laps"].append(lap)
+        clean.append(laps_driver)
+    return clean
