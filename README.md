@@ -8,10 +8,10 @@ It is recommended to create a virtual environment to isolate this project and it
 from your system, but it is not required.
 
 ### Virtual environment
-To create a venv: 
+To create a venv:
 `python3 -m venv ./venv`
 
-To activate it: 
+To activate it:
 `source venv/bin/activate`
 
 See: https://docs.python.org/3/library/venv.html
@@ -21,8 +21,17 @@ To install dependencies:
 `pip install -r requirements.txt`
 
 ### Credentials
-iRacing credentials are needed in order to login to the API. 
+iRacing credentials are needed in order to login to the API.
 
-Define the following environment variables: 
+Define the following environment variables:
 `IRAPI_USR` for username
 `IRAPI_PWD` for password
+
+## Running instructions
+
+### Computing the statistics from a race
+To compute and export the json containing all the statistics for a race:
+handle_results.py subsession_id output_file
+
+subsession_id: Id of the race session.
+output_file: Output file to be written.
