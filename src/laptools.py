@@ -127,7 +127,8 @@ def select_events(array_laps, event):
 
 def noted_incidents(array_laps, name_table):
     """
-    Builds the list of car contacts in a race
+    Builds the list of car contacts in a race.
+    BROKEN !!!!
     """
     eventful = select_events(array_laps, "car contact")
     incidents = []
@@ -148,3 +149,46 @@ def remove_untimed_laps(array_laps):
                 laps_driver["laps"].append(lap)
         clean.append(laps_driver)
     return clean
+
+def clean_for_statistics(laps, flags):
+    """
+    Prepares a list of laps for statistical treatment.
+    Removes all untimed laps, the first lap and the laps with the selected flags.
+    """
+    clean = []
+    for lap in laps:
+        if lap["lap_time"] > 0 and lap["lap_number"] > 1:
+            valid = True
+            for flg in flags:
+                if flg in lap["lap_events"]:
+                    valid = False
+            if valid:
+                clean.append(lap)
+    return clean
+
+def get_lap_statistics(array_laps, flags):
+    """
+    Combines statistical informations on the array of laps.
+    """
+    statistics = []
+    for laps in array_laps:
+        driver = {"cust_id": laps["cust_id"]}
+        clean = clean_for_statistics(laps["laps"], flags)
+        clean.sort(key=lambda x: int(x["lap_time"]))
+        if len(clean) > 0:
+            driver["best_lap"] = clean[0]["lap_time"]
+            driver["quartile_1_lap"] = clean[int(len(clean)/4)]["lap_time"]
+            driver["quartile_3_lap"] = clean[int(3*len(clean)/4)]["lap_time"]
+            driver["worst_lap"] = clean[len(clean)-1]["lap_time"]
+            total = 0
+            for lap in clean:
+                total += lap["lap_time"]
+            driver["average_lap"] = total/len(clean)
+        else:
+            driver["best_lap"] = None
+            driver["quartile_1_lap"] = None
+            driver["average_lap"] = None
+            driver["quartile_3_lap"] = None
+            driver["worst_lap"] = None
+        statistics.append(driver)
+    return statistics
