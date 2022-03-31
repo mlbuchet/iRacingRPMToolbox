@@ -34,8 +34,6 @@ def get_race_results(results, drivers_db):
         - laps_complete: Number of laps completed in the race.
         - starting_position: Starting position in the race.
         - incidents: Number of incidents points during the race.
-        - incidents_per_lap: Average number of incidents per lap.
-        - progression: Gained/Lost positions during the race.
         - finish_position_in_class: Finishing position within its class.
     """
     race = []

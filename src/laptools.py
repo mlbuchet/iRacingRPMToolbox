@@ -29,7 +29,6 @@ def get_best_lap(array_laps, cust_id = None):
                 for lap in laps["laps"]:
                     if lap["lap_time"] <= minlap["lap_time"] and lap["lap_events"] == []:
                         minlap = lap
-
     return minlap
 
 def sort_laps(laps):
