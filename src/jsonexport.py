@@ -32,6 +32,10 @@ def introduce_drivers_info(drivers_db, array):
     return array
 
 def merge_tables(table1, table2):
+    """
+    Merge two array of dictionary by merging dictionaries with same cust_id entry.
+    If two fields are shared, the entry in table 1 overwrites the entry in table 2.
+    """
     for entry1 in table1:
         for entry2 in table2:
             if entry2["cust_id"] == entry1["cust_id"]:
