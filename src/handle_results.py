@@ -14,8 +14,8 @@ import jsonexport
 import argparse
 
 parser = argparse.ArgumentParser(description='Computes statistics for a race.')
-parser.add_argument('subsession_id', type=int, help="Session ID of the race")
-parser.add_argument('output_file', help="Name of the file to be written")
+parser.add_argument('subsession_id', type=int, help="Session ID of the race.")
+parser.add_argument('output_file', help="Name of the file to be written.")
 args = parser.parse_args()
 
 cred = credentials.get_credentials()
