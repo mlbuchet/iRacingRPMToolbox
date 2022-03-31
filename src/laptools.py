@@ -164,3 +164,17 @@ def remove_untimed_laps(array_laps):
                 laps_driver["laps"].append(lap)
         clean.append(laps_driver)
     return clean
+
+def get_qualifying_results(results):
+    """
+    Returns the result from qualifying.
+    """
+    qualify = []
+    for session in results["session_results"]:
+        if session["simsession_name"] == "QUALIFY":
+            for entry in session["results"]:
+                qualify.append({
+                    "cust_id": entry["cust_id"],
+                    "best_qual_lap_time": entry["best_qual_lap_time"],
+                    "starting_position": entry["finish_position"]})
+    return qualify
