@@ -29,7 +29,7 @@ Define the following environment variables:
 
 ## Running instructions
 
-### Computing the statistics from a race
+### Computing the statistics for a race
 To compute and export the json containing all the statistics for a race:
 handle_results.py subsession_id output_file
 
