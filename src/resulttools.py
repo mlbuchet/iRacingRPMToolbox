@@ -53,13 +53,6 @@ def get_race_results(results, drivers_db):
                     "starting_position": entry["starting_position"],
                     "incidents": entry["incidents"],
                     "car_id": entry["car_id"]})
-                # Incidents per laps
-                if infos["laps_complete"] > 0:
-                    infos["incidents_per_lap"] = infos["incidents"] / infos["laps_complete"]
-                else:
-                    infos["incidents_per_lap"] = -1
-                # Gain/Lost positions
-                infos["progression"] = infos["starting_position"] - infos["finish_position"]
                 # Rank in class
                 cls = find_driver(drivers_db,infos["cust_id"])["class"]
                 if cls == "Gold":
