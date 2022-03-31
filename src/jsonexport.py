@@ -28,4 +28,4 @@ def introduce_drivers_info(drivers_db, array):
                 entry["name"] = driver["name"]
                 entry["car_number"] = driver["car_number"]
                 entry["class"] = driver["class"]
-    return entry
+    return array
