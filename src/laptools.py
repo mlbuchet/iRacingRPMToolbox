@@ -79,18 +79,6 @@ def select_events(array_laps, event):
                     eventful.append(lap)
     return eventful
 
-def noted_incidents(array_laps, name_table):
-    '''
-    Builds the list of car contacts in a race.
-    BROKEN !!!!
-    '''
-    eventful = select_events(array_laps, "car contact")
-    incidents = []
-    for evt in eventful:
-        exch = {"lap_number": evt["lap_number"], "display_name": find_name_in_table(name_table, evt["cust_id"])}
-        incidents.append(exch)
-    return incidents
-
 def remove_untimed_laps(array_laps):
     '''
     Takes an array of laps and return a cleaned version of the array with untimed laps removed.

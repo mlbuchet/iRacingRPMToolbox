@@ -30,9 +30,6 @@ def test_select_events():
     car_contact = laptools.select_events(array_laps, "car contact")
     assert len(car_contact) == 21
 
-def test_noted_incidents():
-    assert False
-
 def test_remove_untimed_laps():
     fl = open("../test/data/test_lapdata_45166697.json","r")
     array_laps = json.loads(fl.read())
