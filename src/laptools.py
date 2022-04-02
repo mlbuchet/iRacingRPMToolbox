@@ -46,9 +46,6 @@ def evaluate_drivers(array_laps, fraction = .5, gold_threshold = 1.007, silver_t
     top = int(len(clean[0]["laps"]) * fraction)
     averages = compute_averages(clean, top)
     winner = averages[0]["average"]
-    print(winner)
-    print(winner * gold_threshold)
-    print(winner * silver_threshold)
     grades = []
     for avg in averages:
         if avg["average"] == None:
