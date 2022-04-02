@@ -100,7 +100,7 @@ def remove_untimed_laps(array_laps):
     clean = []
     for laps in array_laps:
         laps_driver = {"cust_id":laps["cust_id"], "laps":[]}
-        for lap in laps:
+        for lap in laps["laps"]:
             if lap["lap_time"] > 0:
                 laps_driver["laps"].append(lap)
         clean.append(laps_driver)
