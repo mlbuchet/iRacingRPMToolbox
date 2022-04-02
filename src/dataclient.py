@@ -1,3 +1,7 @@
+"""
+Low level encapsulation of requests to the iRacing API.
+Forked and modified from jasondilworth56's iracingdataapi.
+"""
 import requests
 
 class irDataClient:
