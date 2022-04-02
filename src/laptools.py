@@ -134,13 +134,13 @@ def get_lap_statistics(array_laps, flags = ["pitted","lost control"]):
         clean.sort(key=lambda x: int(x["lap_time"]))
         if len(clean) > 0:
             driver["best_lap"] = clean[0]["lap_time"]
-            driver["quartile_1_lap"] = clean[int(len(clean)/4)]["lap_time"]
-            driver["quartile_3_lap"] = clean[int(3*len(clean)/4)]["lap_time"]
+            driver["quartile_1_lap"] = clean[int(len(clean)/4)-1]["lap_time"]
+            driver["quartile_3_lap"] = clean[int(3*len(clean)/4)-1]["lap_time"]
             driver["worst_lap"] = clean[len(clean)-1]["lap_time"]
             total = 0
             for lap in clean:
                 total += lap["lap_time"]
-            driver["average_lap"] = total/len(clean)
+            driver["average_lap"] = int(total/len(clean))
         else:
             driver["best_lap"] = None
             driver["quartile_1_lap"] = None
