@@ -70,9 +70,10 @@ def get_race_infos(results):
     """
     Returns general information for the race
     """
-    race = []
+    race = {}
     race["league_name"] = results["league_name"]
     race["start_time"] = results["start_time"]
     race["track_id"] = results["track"]["track_id"]
     race["track_name"] = results["track"]["track_name"]
     race["config_name"] = results["track"]["config_name"]
+    return race
