@@ -71,7 +71,7 @@ def get_race_infos(results):
     Returns general information for the race
     """
     race = []
-    race["leauge_name"] = results["league_name"]
+    race["league_name"] = results["league_name"]
     race["start_time"] = results["start_time"]
     race["track_id"] = results["track"]["track_id"]
     race["track_name"] = results["track"]["track_name"]
