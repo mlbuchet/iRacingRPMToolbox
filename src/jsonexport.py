@@ -13,10 +13,12 @@ def export_to_json(output_file, drivers_db, results, array_laps):
     """
     qualifying_table = resulttools.get_qualifying_results(results)
     race_table = resulttools.get_race_results(results, drivers_db)
-    export = merge_tables(race_table, qualifying_table)
+    drivers_statistics = merge_tables(race_table, qualifying_table)
     laps_table = laptools.get_lap_statistics(array_laps)
-    export = merge_tables(export, laps_table)
-    export = introduce_drivers_info(drivers_db, export)
+    drivers_statistics = merge_tables(export, laps_table)
+    drivers_statistics = introduce_drivers_info(drivers_db, export)
+    export = resulttools.get_race_infos(results)
+    export["drivers_statistics"] = drivers_statistics
     fw = open(output_file,"w")
     fw.write(json.dumps(export))
     fw.close()
