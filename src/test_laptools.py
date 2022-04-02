@@ -13,7 +13,25 @@ def test_compute_average():
     assert laptools.compute_average(clean, 200) == None
 
 def test_compute_averages():
-    assert False
+    fl = open("../test/data/test_lapdata_45166697.json","r")
+    array_laps = json.loads(fl.read())
+    fl.close()
+    assert len(array_laps) == 34
+    clean = laptools.remove_untimed_laps(array_laps)
+    averages = laptools.compute_averages(clean)
+    assert averages[6]["cust_id"] == 491843
+    assert averages[6]["average"] == 907134
+    assert averages[33]["cust_id"] == 165203
+    assert averages[33]["average"] == None
+    assert averages[32]["cust_id"] == 603137
+    assert averages[32]["average"] == 1082076
+    averages = laptools.compute_averages(clean, 15)
+    assert averages[6]["cust_id"] == 491843
+    assert averages[6]["average"] == 886626
+    assert averages[33]["cust_id"] == 165203
+    assert averages[33]["average"] == None
+    assert averages[32]["cust_id"] == 603137
+    assert averages[32]["average"] == None
 
 def test_compute_median():
     assert False

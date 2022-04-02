@@ -7,6 +7,7 @@ def compute_average(laps, top = None):
     Computes the average time of the best laps of an array.
     top indicates the number of laps to be considered.
     If top is not provided then it computes the average of all laps.
+    If there are not enough lap then the function returns None.
     Requires a clean array of laps without untimed laps.
     '''
     if top == None:
@@ -25,12 +26,12 @@ def compute_averages(array_laps, top = None):
     Computes the average time of the best laps for each driver.
     top indicates the number of laps to be considered.
     If top is not provided then it computes the average of all laps.
+    If the driver has no lap time, or less laps than top, then the functions associate None to the driver.
     Requires a clean array of laps without untimed laps.
     '''
     averages = []
     for laps in array_laps:
-        if top == None or len(laps["laps"]) >= top:
-            averages.append({"cust_id":laps["cust_id"], "average":compute_average(laps["laps"], top)})
+        averages.append({"cust_id":laps["cust_id"], "average":compute_average(laps["laps"], top)})
     return averages
 
 def compute_median(averages):
