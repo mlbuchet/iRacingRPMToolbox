@@ -3,9 +3,9 @@ File containing the function working on the result table.
 """
 
 def get_qualifying_results(results):
-    """
+    '''
     Returns the result from qualifying.
-    """
+    '''
     qualify = []
     for session in results["session_results"]:
         if session["simsession_name"] == "QUALIFY":
@@ -17,16 +17,16 @@ def get_qualifying_results(results):
     return qualify
 
 def find_driver(drivers_db, cust_id):
-    """
+    '''
     Finds the name corresponding to an id in a name table
-    """
+    '''
     for entry in drivers_db:
         if entry["cust_id"] == cust_id:
             return entry
     return None
 
 def get_race_results(results, drivers_db):
-    """
+    '''
     Returns relevant information stored in the results tab of the results table.
     Infos currently exported:
         - cust_id: Customer id.
@@ -35,7 +35,7 @@ def get_race_results(results, drivers_db):
         - starting_position: Starting position in the race.
         - incidents: Number of incidents points during the race.
         - finish_position_in_class: Finishing position within its class.
-    """
+    '''
     race = []
     for session in results["session_results"]:
         if session["simsession_name"] == "RACE":
