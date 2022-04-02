@@ -16,15 +16,6 @@ def get_qualifying_results(results):
                     "starting_position": entry["finish_position"]})
     return qualify
 
-def find_driver(drivers_db, cust_id):
-    '''
-    Finds the name corresponding to an id in a name table
-    '''
-    for entry in drivers_db:
-        if entry["cust_id"] == cust_id:
-            return entry
-    return None
-
 def get_race_results(results, drivers_db):
     '''
     Returns relevant information stored in the results tab of the results table.
@@ -52,7 +43,7 @@ def get_race_results(results, drivers_db):
                     "incidents": entry["incidents"],
                     "car_id": entry["car_id"]})
                 # Rank in class
-                cls = find_driver(drivers_db,infos["cust_id"])["class"]
+                cls = leaguetools.find_driver(drivers_db,infos["cust_id"])["class"]
                 if cls == "Gold":
                     infos["finish_position_in_class"] = gpos
                     gpos += 1

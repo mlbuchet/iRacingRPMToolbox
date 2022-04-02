@@ -25,3 +25,12 @@ def build_drivers_database(league):
             entry["class"] = "Bronze"
         db.append(entry)
     return db
+
+def find_driver(drivers_db, cust_id):
+    '''
+    Finds the name corresponding to an id in a name table
+    '''
+    for entry in drivers_db:
+        if entry["cust_id"] == cust_id:
+            return entry
+    return None
