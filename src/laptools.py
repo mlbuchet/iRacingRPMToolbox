@@ -11,13 +11,14 @@ def compute_average(laps, top = None):
     '''
     if top == None:
         top = len(laps)
+    if top == 0 or top > len(laps):
+        return None
     laps.sort(key=lambda x: int(x["lap_time"]))
     interest = laps[:top]
     sum = 0
     for lap in interest:
         sum += lap["lap_time"]
     return int(sum/top)
-
 
 def compute_averages(array_laps, top = None):
     '''

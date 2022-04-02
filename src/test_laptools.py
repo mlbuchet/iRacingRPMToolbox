@@ -10,6 +10,7 @@ def test_compute_average():
     assert laptools.compute_average(clean) == 906466
     assert laptools.compute_average(clean, 1) == 884514
     assert laptools.compute_average(clean, 15) == 886626
+    assert laptools.compute_average(clean, 200) == None
 
 def test_compute_averages():
     assert False
