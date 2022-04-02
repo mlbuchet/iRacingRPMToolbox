@@ -31,7 +31,7 @@ def introduce_drivers_info(drivers_db, array):
     export = []
     for entry in array:
         aux = entry.copy()
-        driver = resulttools.find_driver(drivers_db, entry["cust_id"])
+        driver = leaguetools.find_driver(drivers_db, entry["cust_id"])
         aux["name"] = driver["name"]
         aux["car_number"] = driver["car_number"]
         aux["class"] = driver["class"]
