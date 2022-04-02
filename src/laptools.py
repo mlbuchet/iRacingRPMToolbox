@@ -34,20 +34,6 @@ def compute_averages(array_laps, top = None):
         averages.append({"cust_id":laps["cust_id"], "average":compute_average(laps["laps"], top)})
     return averages
 
-def compute_median(averages):
-    '''
-    Computes the median of an array of averages.
-    Ignores entries valued at None.
-    '''
-    quantities = []
-    count = 0
-    for avg in averages:
-        if avg["average"] != None :
-            quantities.append(int(avg["average"]))
-            count += 1
-    quantities.sort()
-    return quantities[int(count/2)-1]
-
 def evaluate_drivers(array_laps, fraction = .5, gold_threshold = 1.007, silver_threshold = 1.01):
     '''
     Assigns a grade depending on the results from a race.

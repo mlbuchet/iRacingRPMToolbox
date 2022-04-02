@@ -33,17 +33,6 @@ def test_compute_averages():
     assert averages[32]["cust_id"] == 603137
     assert averages[32]["average"] == None
 
-def test_compute_median():
-    fl = open("../test/data/test_lapdata_45166697.json","r")
-    array_laps = json.loads(fl.read())
-    fl.close()
-    assert len(array_laps) == 34
-    clean = laptools.remove_untimed_laps(array_laps)
-    averages = laptools.compute_averages(clean)
-    assert laptools.compute_median(averages) == 920302
-    averages = laptools.compute_averages(clean, 20)
-    assert laptools.compute_median(averages) == 893518
-
 def test_evaluate_drivers():
     fl = open("../test/data/test_lapdata_45166697.json","r")
     array_laps = json.loads(fl.read())
