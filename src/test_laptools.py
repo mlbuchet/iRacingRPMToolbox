@@ -32,7 +32,22 @@ def test_remove_untimed_laps():
     assert clean[1]["laps"][34]["lap_time"] > 0
 
 def test_clean_for_statistics():
-    assert False
+    fl = open("../test/data/test_lapdata_45166697.json","r")
+    array_laps = json.loads(fl.read())
+    fl.close()
+    laps = array_laps[1]["laps"]
+    assert len(laps) == 62
+    clean = laptools.clean_for_statistics(laps, [])
+    assert len(laps) == 62
+    assert len(clean) == 59
+    clean = laptools.clean_for_statistics(laps, ["pitted"])
+    assert len(laps) == 62
+    assert len(clean) == 57
+    laps = array_laps[6]["laps"]
+    assert len(laps) == 62
+    clean = laptools.clean_for_statistics(laps, ["pitted", "lost control"])
+    assert len(laps) == 62
+    assert len(clean) == 55
 
 def test_get_lap_statistics():
     assert False
