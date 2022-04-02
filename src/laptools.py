@@ -32,9 +32,9 @@ def get_best_lap(array_laps, cust_id = None):
     return minlap
 
 def sort_laps(laps):
-    """
+    '''
     Sorts an array of laps and return the sorted array.
-    """
+    '''
     aux = []
     for lap in laps:
         aux.append((lap["lap_time"], lap))
@@ -46,12 +46,12 @@ def sort_laps(laps):
 
 
 def compute_average(laps, top = None):
-    """
+    '''
     Computes the average time of the best laps of an array.
     top indicates the number of laps to be considered.
     If top is not provided then it computes the average of all laps.
     Requires a clean array of laps without untimed laps.
-    """
+    '''
     if top == None:
         top = len(laps)
     sorted = sort_laps(laps)
@@ -64,12 +64,12 @@ def compute_average(laps, top = None):
 
 
 def compute_averages(array_laps, top = None):
-    """
+    '''
     Computes the average time of the best laps for each driver.
     top indicates the number of laps to be considered.
     If top is not provided then it computes the average of all laps.
     Requires a clean array of laps without untimed laps.
-    """
+    '''
     averages = []
     for laps in array_laps:
         if top == None or len(laps["laps"]) >= top:
@@ -77,10 +77,10 @@ def compute_averages(array_laps, top = None):
     return averages
 
 def compute_median(averages):
-    """
+    '''
     Computes the median of an array of averages.
     Requires a clean array of laps without untimed laps.
-    """
+    '''
     sorted = []
     for avg in averages:
         sorted.append((int(avg["average"]), avg["average"]))
@@ -88,14 +88,14 @@ def compute_median(averages):
     return sorted[int(len(sorted)/2)][1]
 
 def evaluate_drivers(array_laps, fraction = .5, gold_threshold = .99, silver_threshold = .998):
-    """
+    '''
     Assigns a grade depending on the results from a race.
     fraction: fraction of the number of laps completed by the leader and taking into account in the computation.
         If a driver has completed less than the required number of laps, it is not evaluated.
     gold_threshold: percentage of the median average lap time to be classed as a gold driver.
     silver_threshold: percentage of the median average lap time to be classed as a silver driver.
     Requires a clean array of laps without untimed laps.
-    """
+    '''
     top = len(array_laps[0]["laps"]) * fraction
     averages = compute_averages(array_laps, top)
     median = compute_median(averages)
@@ -110,11 +110,11 @@ def evaluate_drivers(array_laps, fraction = .5, gold_threshold = .99, silver_thr
     return grades
 
 def select_events(array_laps, event):
-    """
+    '''
     Extract the list of all laps where a given event has happened.
 
     WARNING: Eventful laps will be modified with an extra field of data containing the customer id.
-    """
+    '''
     eventful = []
     for laps in array_laps:
         for lap in laps["laps"]:
@@ -125,10 +125,10 @@ def select_events(array_laps, event):
     return eventful
 
 def noted_incidents(array_laps, name_table):
-    """
+    '''
     Builds the list of car contacts in a race.
     BROKEN !!!!
-    """
+    '''
     eventful = select_events(array_laps, "car contact")
     incidents = []
     for evt in eventful:
@@ -137,9 +137,9 @@ def noted_incidents(array_laps, name_table):
     return incidents
 
 def remove_untimed_laps(array_laps):
-    """
+    '''
     Takes an array of laps and return a cleaned version of the array with untimed laps removed.
-    """
+    '''
     clean = []
     for laps in array_laps:
         laps_driver = {"cust_id":laps["cust_id"], "laps":[]}
@@ -150,10 +150,10 @@ def remove_untimed_laps(array_laps):
     return clean
 
 def clean_for_statistics(laps, flags):
-    """
+    '''
     Prepares a list of laps for statistical treatment.
     Removes all untimed laps, the first lap and the laps with the selected flags.
-    """
+    '''
     clean = []
     for lap in laps:
         if lap["lap_time"] > 0 and lap["lap_number"] > 1:
@@ -166,10 +166,10 @@ def clean_for_statistics(laps, flags):
     return clean
 
 def get_lap_statistics(array_laps, flags = ["pitted","invalid","lost control"]):
-    """
+    '''
     Combines statistical informations on the array of laps.
     Ignores lap which contain one of the flags.
-    """
+    '''
     statistics = []
     for laps in array_laps:
         driver = {"cust_id": laps["cust_id"]}
