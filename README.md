@@ -35,3 +35,10 @@ handle_results.py subsession_id output_file
 
 subsession_id: Id of the race session.
 output_file: Output file to be written.
+
+### Extracting the laps with car contact
+To extract all laps where a car contact occurred with the names of the drivers involved:
+notes_incidents.py subsession_id output_file
+
+subsession_id: Id of the race session.
+output_file: Output file to be written.

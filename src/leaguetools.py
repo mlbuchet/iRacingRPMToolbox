@@ -3,6 +3,14 @@ File containing the function working on the league table.
 """
 
 def build_drivers_database(league):
+    '''
+    Creates a drivers database from the league information.
+    The database contains the following fields:
+    cust_id: id of the driver.
+    car_nuber: number of the driver.
+    name: name of the driver without extra numbers or other artifact.
+    class: class in which the driver competes.
+    '''
     db = []
     for driver in league["roster"]:
         entry = {"cust_id":driver["cust_id"], "car_number":driver["car_number"]}
@@ -17,3 +25,12 @@ def build_drivers_database(league):
             entry["class"] = "Bronze"
         db.append(entry)
     return db
+
+def find_driver(drivers_db, cust_id):
+    '''
+    Finds the name corresponding to an id in a name table
+    '''
+    for entry in drivers_db:
+        if entry["cust_id"] == cust_id:
+            return entry
+    return None

@@ -2,119 +2,69 @@
 File containing the functions working on laps and array of laps.
 """
 
-def get_best_lap(array_laps, cust_id = None):
-    '''
-    Returns the fastest lap of a driver from an array of laps.
-    Requires an array of laps without untimed laps.
-    If no id is provided for the driver, it returns the fastest lap of the race augmented with the id of the driver having done it.
-    Only clean laps are counted.
-
-    WARNING: Calling this function without customer id will modifiy the returned lap with an extra field of data.
-    '''
-    # Looking for the fastest overall lap
-    if cust_id == None:
-        minlap = array_laps[0]["laps"][0]
-        fastest_id = array_laps[0]["cust_id"]
-        for laps in array_laps:
-            for lap in laps["laps"]:
-                if lap["lap_time"] <= minlap["lap_time"] and lap["lap_events"] == []:
-                    minlap = lap
-                    fastest_id = laps["cust_id"]
-        minlap["cust_id"] = fastest_id
-    # Looking for the fastest lap from a given driver
-    else:
-        for laps in array_laps:
-            if laps["cust_id"] == cust_id and len(laps["laps"]) > 0:
-                minlap = laps["laps"][0]
-                for lap in laps["laps"]:
-                    if lap["lap_time"] <= minlap["lap_time"] and lap["lap_events"] == []:
-                        minlap = lap
-    return minlap
-
-def sort_laps(laps):
-    """
-    Sorts an array of laps and return the sorted array.
-    """
-    aux = []
-    for lap in laps:
-        aux.append((lap["lap_time"], lap))
-    aux.sort(reverse = True)
-    sorted = []
-    while aux:
-        sorted.append(aux.pop()[1])
-    return sorted
-
-
 def compute_average(laps, top = None):
-    """
+    '''
     Computes the average time of the best laps of an array.
     top indicates the number of laps to be considered.
     If top is not provided then it computes the average of all laps.
+    If there are not enough lap then the function returns None.
     Requires a clean array of laps without untimed laps.
-    """
+    '''
     if top == None:
         top = len(laps)
-    sorted = sort_laps(laps)
-    index = 0
+    if top == 0 or top > len(laps):
+        return None
+    laps.sort(key=lambda x: int(x["lap_time"]))
+    interest = laps[:top]
     sum = 0
-    while index < top:
-        sum += sorted.pop(0)["lap_time"]
-        index += 1
-    return sum/top
-
+    for lap in interest:
+        sum += lap["lap_time"]
+    return int(sum/top)
 
 def compute_averages(array_laps, top = None):
-    """
+    '''
     Computes the average time of the best laps for each driver.
     top indicates the number of laps to be considered.
     If top is not provided then it computes the average of all laps.
+    If the driver has no lap time, or less laps than top, then the functions associate None to the driver.
     Requires a clean array of laps without untimed laps.
-    """
+    '''
     averages = []
     for laps in array_laps:
-        if top == None or len(laps["laps"]) >= top:
-            averages.append({"cust_id":laps["cust_id"], "average":compute_average(laps["laps"], top)})
+        averages.append({"cust_id":laps["cust_id"], "average":compute_average(laps["laps"], top)})
     return averages
 
-def compute_median(averages):
-    """
-    Computes the median of an array of averages.
-    Requires a clean array of laps without untimed laps.
-    """
-    sorted = []
-    for avg in averages:
-        sorted.append((int(avg["average"]), avg["average"]))
-    sorted.sort()
-    return sorted[int(len(sorted)/2)][1]
-
-def evaluate_drivers(array_laps, fraction = .5, gold_threshold = .99, silver_threshold = .998):
-    """
+def evaluate_drivers(array_laps, fraction = .5, gold_threshold = 1.007, silver_threshold = 1.01):
+    '''
     Assigns a grade depending on the results from a race.
     fraction: fraction of the number of laps completed by the leader and taking into account in the computation.
         If a driver has completed less than the required number of laps, it is not evaluated.
-    gold_threshold: percentage of the median average lap time to be classed as a gold driver.
-    silver_threshold: percentage of the median average lap time to be classed as a silver driver.
+    gold_threshold: percentage of the winner's average lap time to be classed as a gold driver.
+    silver_threshold: percentage of the winner's average lap time to be classed as a silver driver.
     Requires a clean array of laps without untimed laps.
-    """
-    top = len(array_laps[0]["laps"]) * fraction
+    '''
+    top = int(len(array_laps[0]["laps"]) * fraction)
     averages = compute_averages(array_laps, top)
-    median = compute_median(averages)
+    winner = averages[0]["average"]
+    print(winner)
+    print(winner * gold_threshold)
+    print(winner * silver_threshold)
     grades = []
     for avg in averages:
-        if avg["average"] <= gold_threshold * median:
+        if avg["average"] == None:
+            grades.append({"cust_id":avg["cust_id"], "grade":None})
+        elif avg["average"] <= gold_threshold * winner:
             grades.append({"cust_id":avg["cust_id"], "grade":"Gold"})
-        elif avg["average"] <= silver_threshold * median:
+        elif avg["average"] <= silver_threshold * winner:
             grades.append({"cust_id":avg["cust_id"], "grade":"Silver"})
         else:
             grades.append({"cust_id":avg["cust_id"], "grade":"Bronze"})
     return grades
 
 def select_events(array_laps, event):
-    """
+    '''
     Extract the list of all laps where a given event has happened.
-
-    WARNING: Eventful laps will be modified with an extra field of data containing the customer id.
-    """
+    '''
     eventful = []
     for laps in array_laps:
         for lap in laps["laps"]:
@@ -124,36 +74,24 @@ def select_events(array_laps, event):
                     eventful.append(lap)
     return eventful
 
-def noted_incidents(array_laps, name_table):
-    """
-    Builds the list of car contacts in a race.
-    BROKEN !!!!
-    """
-    eventful = select_events(array_laps, "car contact")
-    incidents = []
-    for evt in eventful:
-        exch = {"lap_number": evt["lap_number"], "display_name": find_name_in_table(name_table, evt["cust_id"])}
-        incidents.append(exch)
-    return incidents
-
 def remove_untimed_laps(array_laps):
-    """
+    '''
     Takes an array of laps and return a cleaned version of the array with untimed laps removed.
-    """
+    '''
     clean = []
     for laps in array_laps:
         laps_driver = {"cust_id":laps["cust_id"], "laps":[]}
-        for lap in laps:
+        for lap in laps["laps"]:
             if lap["lap_time"] > 0:
                 laps_driver["laps"].append(lap)
         clean.append(laps_driver)
     return clean
 
 def clean_for_statistics(laps, flags):
-    """
+    '''
     Prepares a list of laps for statistical treatment.
     Removes all untimed laps, the first lap and the laps with the selected flags.
-    """
+    '''
     clean = []
     for lap in laps:
         if lap["lap_time"] > 0 and lap["lap_number"] > 1:
@@ -165,11 +103,11 @@ def clean_for_statistics(laps, flags):
                 clean.append(lap)
     return clean
 
-def get_lap_statistics(array_laps, flags = ["pitted","invalid","lost control"]):
-    """
+def get_lap_statistics(array_laps, flags = ["pitted","lost control"]):
+    '''
     Combines statistical informations on the array of laps.
     Ignores lap which contain one of the flags.
-    """
+    '''
     statistics = []
     for laps in array_laps:
         driver = {"cust_id": laps["cust_id"]}
@@ -177,13 +115,13 @@ def get_lap_statistics(array_laps, flags = ["pitted","invalid","lost control"]):
         clean.sort(key=lambda x: int(x["lap_time"]))
         if len(clean) > 0:
             driver["best_lap"] = clean[0]["lap_time"]
-            driver["quartile_1_lap"] = clean[int(len(clean)/4)]["lap_time"]
-            driver["quartile_3_lap"] = clean[int(3*len(clean)/4)]["lap_time"]
+            driver["quartile_1_lap"] = clean[int(len(clean)/4)-1]["lap_time"]
+            driver["quartile_3_lap"] = clean[int(3*len(clean)/4)-1]["lap_time"]
             driver["worst_lap"] = clean[len(clean)-1]["lap_time"]
             total = 0
             for lap in clean:
                 total += lap["lap_time"]
-            driver["average_lap"] = total/len(clean)
+            driver["average_lap"] = int(total/len(clean))
         else:
             driver["best_lap"] = None
             driver["quartile_1_lap"] = None

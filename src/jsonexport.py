@@ -8,9 +8,9 @@ File containing the exporting functions for use in graphics and interfaces.
 """
 
 def export_to_json(output_file, drivers_db, results, array_laps):
-    """
+    '''
     Exports the driver list with useful informations for display.
-    """
+    '''
     qualifying_table = resulttools.get_qualifying_results(results)
     race_table = resulttools.get_race_results(results, drivers_db)
     drivers_statistics = merge_tables(race_table, qualifying_table)
@@ -24,10 +24,10 @@ def export_to_json(output_file, drivers_db, results, array_laps):
     fw.close()
 
 def introduce_drivers_info(drivers_db, array):
-    """
+    '''
     Adds league specific information to the entries in the array.
     The following fields are added: name, number, class.
-    """
+    '''
     export = []
     for entry in array:
         aux = entry.copy()
@@ -39,10 +39,10 @@ def introduce_drivers_info(drivers_db, array):
     return export
 
 def merge_tables(table1, table2):
-    """
+    '''
     Merge two array of dictionary by merging dictionaries with same cust_id entry.
     If two fields are shared, the entry in table 1 overwrites the entry in table 2.
-    """
+    '''
     merged = []
     for entry1 in table1:
         for entry2 in table2:
