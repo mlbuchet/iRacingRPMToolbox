@@ -8,7 +8,6 @@ from lapdata import irLapData
 from dataclient import irDataClient
 import credentials
 import laptools
-import resulttools
 import leaguetools
 import jsonexport
 import argparse
