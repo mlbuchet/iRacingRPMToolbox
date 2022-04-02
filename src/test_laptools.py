@@ -2,7 +2,14 @@ import json
 import laptools
 
 def test_compute_average():
-    assert False
+    fl = open("../test/data/test_lapdata_45166697.json","r")
+    array_laps = json.loads(fl.read())
+    fl.close()
+    assert len(array_laps) == 34
+    clean = laptools.clean_for_statistics(array_laps[6]["laps"], [])
+    assert laptools.compute_average(clean) == 906466
+    assert laptools.compute_average(clean, 1) == 884514
+    assert laptools.compute_average(clean, 15) == 886626
 
 def test_compute_averages():
     assert False
