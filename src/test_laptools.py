@@ -50,4 +50,25 @@ def test_clean_for_statistics():
     assert len(clean) == 55
 
 def test_get_lap_statistics():
-    assert False
+    fl = open("../test/data/test_lapdata_45166697.json","r")
+    array_laps = json.loads(fl.read())
+    fl.close()
+    assert len(array_laps) == 34
+    statistics = laptools.get_lap_statistics(array_laps)
+    assert len(statistics) == 34
+    driver = statistics[6]
+    assert driver["cust_id"] == 491843
+    assert driver["best_lap"] == 884514
+    assert driver["worst_lap"] == 915774
+    assert driver["quartile_1_lap"] == 888007
+    assert driver["quartile_3_lap"] == 892617
+    assert driver["average_lap"] == 891125
+    statistics = laptools.get_lap_statistics(array_laps,[])
+    assert len(statistics) == 34
+    driver = statistics[6]
+    assert driver["cust_id"] == 491843
+    assert driver["best_lap"] == 884514
+    assert driver["worst_lap"] == 1347494
+    assert driver["quartile_1_lap"] == 888026
+    assert driver["quartile_3_lap"] == 893045
+    assert driver["average_lap"] == 906466
