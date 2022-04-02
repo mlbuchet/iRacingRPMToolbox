@@ -1,19 +1,23 @@
 from dataclient import irDataClient
 import json
 
+"""
+Encapsulates the low level interface to the API for functions that need multiple requests.
+"""
+
 class irLapData:
 
     def __init__(self, client):
-        """
+        '''
         Initialise the client retrieving data from the iRacing servers.
-        """
+        '''
         self.client = client
 
     def get_laps(self, subsession_id, simsession_number = 0):
-        """
+        '''
         Returns all the laps completed in a given subsession.
         Contains all laps, including invalid laps.
-        """
+        '''
         results = self.client.get_result(subsession_id)
         drivers = results["session_results"][len(results["session_results"])-1]["results"]
 
