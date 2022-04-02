@@ -16,6 +16,8 @@ def export_to_json(output_file, drivers_db, results, array_laps):
     drivers_statistics = merge_tables(race_table, qualifying_table)
     laps_statistics = laptools.get_lap_statistics(array_laps)
     drivers_statistics = merge_tables(drivers_statistics, laps_statistics)
+    grades = laptools.evaluate_drivers(array_laps)
+    drivers_statistics = merge_tables(drivers_statistics, grades)
     drivers_statistics = introduce_drivers_info(drivers_db, drivers_statistics)
     export = resulttools.get_race_infos(results)
     export["drivers_statistics"] = drivers_statistics
