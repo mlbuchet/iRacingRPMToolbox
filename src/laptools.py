@@ -48,23 +48,28 @@ def compute_median(averages):
     quantities.sort()
     return quantities[int(count/2)-1]
 
-def evaluate_drivers(array_laps, fraction = .5, gold_threshold = .99, silver_threshold = .998):
+def evaluate_drivers(array_laps, fraction = .5, gold_threshold = 1.007, silver_threshold = 1.01):
     '''
     Assigns a grade depending on the results from a race.
     fraction: fraction of the number of laps completed by the leader and taking into account in the computation.
         If a driver has completed less than the required number of laps, it is not evaluated.
-    gold_threshold: percentage of the median average lap time to be classed as a gold driver.
-    silver_threshold: percentage of the median average lap time to be classed as a silver driver.
+    gold_threshold: percentage of the winner's average lap time to be classed as a gold driver.
+    silver_threshold: percentage of the winner's average lap time to be classed as a silver driver.
     Requires a clean array of laps without untimed laps.
     '''
-    top = len(array_laps[0]["laps"]) * fraction
+    top = int(len(array_laps[0]["laps"]) * fraction)
     averages = compute_averages(array_laps, top)
-    median = compute_median(averages)
+    winner = averages[0]["average"]
+    print(winner)
+    print(winner * gold_threshold)
+    print(winner * silver_threshold)
     grades = []
     for avg in averages:
-        if avg["average"] <= gold_threshold * median:
+        if avg["average"] == None:
+            grades.append({"cust_id":avg["cust_id"], "grade":None})
+        elif avg["average"] <= gold_threshold * winner:
             grades.append({"cust_id":avg["cust_id"], "grade":"Gold"})
-        elif avg["average"] <= silver_threshold * median:
+        elif avg["average"] <= silver_threshold * winner:
             grades.append({"cust_id":avg["cust_id"], "grade":"Silver"})
         else:
             grades.append({"cust_id":avg["cust_id"], "grade":"Bronze"})

@@ -40,17 +40,35 @@ def test_compute_median():
     assert len(array_laps) == 34
     clean = laptools.remove_untimed_laps(array_laps)
     averages = laptools.compute_averages(clean)
-    assert len(averages) == 34
     assert laptools.compute_median(averages) == 920302
     averages = laptools.compute_averages(clean, 20)
     assert laptools.compute_median(averages) == 893518
-    fr = open("trash.txt", "w")
-    for avg in averages:
-        fr.write(str(avg["average"])+"\n")
-    fr.close()
 
 def test_evaluate_drivers():
-    assert False
+    fl = open("../test/data/test_lapdata_45166697.json","r")
+    array_laps = json.loads(fl.read())
+    fl.close()
+    assert len(array_laps) == 34
+    clean = laptools.remove_untimed_laps(array_laps)
+    evaluation = laptools.evaluate_drivers(clean)
+    assert evaluation[0]["cust_id"] == 374266
+    assert evaluation[0]["grade"] == "Gold"
+    assert evaluation[13]["cust_id"] == 343195
+    assert evaluation[13]["grade"] == "Gold"
+    assert evaluation[5]["cust_id"] == 335711
+    assert evaluation[5]["grade"] == "Silver"
+    assert evaluation[21]["cust_id"] == 181019
+    assert evaluation[21]["grade"] == "Bronze"
+    assert evaluation[29]["cust_id"] == 482943
+    assert evaluation[29]["grade"] == None
+    assert evaluation[2]["cust_id"] == 565134
+    assert evaluation[2]["grade"] == "Gold"
+    assert evaluation[19]["cust_id"] == 527397
+    assert evaluation[19]["grade"] == "Silver"
+    assert evaluation[9]["cust_id"] == 409289
+    assert evaluation[9]["grade"] == "Silver"
+    assert evaluation[11]["cust_id"] == 130889
+    assert evaluation[11]["grade"] == "Bronze"
 
 def test_select_events():
     fl = open("../test/data/test_lapdata_45166697.json","r")
