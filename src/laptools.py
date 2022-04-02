@@ -37,13 +37,16 @@ def compute_averages(array_laps, top = None):
 def compute_median(averages):
     '''
     Computes the median of an array of averages.
-    Requires a clean array of laps without untimed laps.
+    Ignores entries valued at None.
     '''
-    sorted = []
+    quantities = []
+    count = 0
     for avg in averages:
-        sorted.append((int(avg["average"]), avg["average"]))
-    sorted.sort()
-    return sorted[int(len(sorted)/2)][1]
+        if avg["average"] != None :
+            quantities.append(int(avg["average"]))
+            count += 1
+    quantities.sort()
+    return quantities[int(count/2)-1]
 
 def evaluate_drivers(array_laps, fraction = .5, gold_threshold = .99, silver_threshold = .998):
     '''

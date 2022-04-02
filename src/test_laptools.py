@@ -34,7 +34,20 @@ def test_compute_averages():
     assert averages[32]["average"] == None
 
 def test_compute_median():
-    assert False
+    fl = open("../test/data/test_lapdata_45166697.json","r")
+    array_laps = json.loads(fl.read())
+    fl.close()
+    assert len(array_laps) == 34
+    clean = laptools.remove_untimed_laps(array_laps)
+    averages = laptools.compute_averages(clean)
+    assert len(averages) == 34
+    assert laptools.compute_median(averages) == 920302
+    averages = laptools.compute_averages(clean, 20)
+    assert laptools.compute_median(averages) == 893518
+    fr = open("trash.txt", "w")
+    for avg in averages:
+        fr.write(str(avg["average"])+"\n")
+    fr.close()
 
 def test_evaluate_drivers():
     assert False
