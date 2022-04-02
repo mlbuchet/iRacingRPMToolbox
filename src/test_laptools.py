@@ -14,7 +14,21 @@ def test_evaluate_drivers():
     assert False
 
 def test_select_events():
-    assert False
+    fl = open("../test/data/test_lapdata_45166697.json","r")
+    array_laps = json.loads(fl.read())
+    fl.close()
+    assert len(array_laps) == 34
+    reduced = [array_laps[6]]
+    car_contact = laptools.select_events(reduced, "car contact")
+    assert len(car_contact) == 1
+    assert car_contact[0]["cust_id"] == 491843
+    assert car_contact[0]["lap_time"] == -1
+    assert "car contact" in car_contact[0]["lap_events"]
+    assert car_contact[0]["lap_number"] == 58
+    off_track = laptools.select_events(reduced, "off track")
+    assert len(off_track) == 12
+    car_contact = laptools.select_events(array_laps, "car contact")
+    assert len(car_contact) == 21
 
 def test_noted_incidents():
     assert False
