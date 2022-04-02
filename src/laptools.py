@@ -165,9 +165,10 @@ def clean_for_statistics(laps, flags):
                 clean.append(lap)
     return clean
 
-def get_lap_statistics(array_laps, flags):
+def get_lap_statistics(array_laps, flags = ["pitted","invalid","lost control"]):
     """
     Combines statistical informations on the array of laps.
+    Ignores lap which contain one of the flags.
     """
     statistics = []
     for laps in array_laps:

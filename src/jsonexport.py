@@ -14,7 +14,7 @@ def export_to_json(output_file, drivers_db, results, array_laps):
     qualifying_table = resulttools.get_qualifying_results(results)
     race_table = resulttools.get_race_results(results, drivers_db)
     drivers_statistics = merge_tables(race_table, qualifying_table)
-    laps_table = laptools.get_lap_statistics(array_laps, ["pitted","invalid","lost control"]) # The second argument represents the flag that gets laps to be ignored.
+    laps_table = laptools.get_lap_statistics(array_laps)
     drivers_statistics = merge_tables(export, laps_table)
     drivers_statistics = introduce_drivers_info(drivers_db, export)
     export = resulttools.get_race_infos(results)
