@@ -41,10 +41,10 @@ def evaluate_drivers(array_laps, fraction = .5, gold_threshold = 1.007, silver_t
         If a driver has completed less than the required number of laps, it is not evaluated.
     gold_threshold: percentage of the winner's average lap time to be classed as a gold driver.
     silver_threshold: percentage of the winner's average lap time to be classed as a silver driver.
-    Requires a clean array of laps without untimed laps.
     '''
-    top = int(len(array_laps[0]["laps"]) * fraction)
-    averages = compute_averages(array_laps, top)
+    clean = remove_untimed_laps(array_laps)
+    top = int(len(clean[0]["laps"]) * fraction)
+    averages = compute_averages(clean, top)
     winner = averages[0]["average"]
     print(winner)
     print(winner * gold_threshold)
