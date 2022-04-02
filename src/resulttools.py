@@ -2,6 +2,8 @@
 File containing the function working on the result table.
 """
 
+import leaguetools
+
 def get_qualifying_results(results):
     '''
     Returns the result from qualifying.
