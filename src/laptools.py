@@ -69,8 +69,6 @@ def evaluate_drivers(array_laps, fraction = .5, gold_threshold = .99, silver_thr
 def select_events(array_laps, event):
     '''
     Extract the list of all laps where a given event has happened.
-
-    WARNING: Eventful laps will be modified with an extra field of data containing the customer id.
     '''
     eventful = []
     for laps in array_laps:
