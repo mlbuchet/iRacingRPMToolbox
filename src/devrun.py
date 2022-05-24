@@ -7,6 +7,7 @@ import resulttools
 import leaguetools
 import jsonexport
 import pandas
+import charttools
 
 """
 This file is for testing purposes. Comment the section that are not needed for your current testing.
@@ -20,6 +21,7 @@ Testing the requests on the server and writing the results in a json file
 # lpd = irLapData(client)
 # results = client.get_result(45166697)
 # laps = lpd.get_laps(45166697)
+# lap_chart = client.get_result_lap_chart_data(45166697)
 # league = client.get_league(7826)
 
 '''
@@ -34,6 +36,9 @@ Dumping the results locally
 # fr = open("test_league.json","w")
 # fr.write(json.dumps(league))
 # fr.close()
+# fc = open("test_lap_chart.json","w")
+# fc.write(json.dumps(lap_chart))
+# fc.close()
 
 '''
 Reading the results from the local testing dump
@@ -47,6 +52,9 @@ fd.close()
 fd = open("test_league.json", "r")
 league = json.loads(fd.read())
 fd.close()
+fc = open("test_lap_chart.json","r")
+charts = json.loads(fc.read())
+fc.close()
 
 '''
 Testing various functions.
@@ -72,8 +80,10 @@ Testing various functions.
 # print(incidents)
 
 # print(resulttools.get_qualifying_results(results))
-db = leaguetools.build_drivers_database(league)
-jsonexport.export_to_json("test_export.json", db, results, laps)
+# db = leaguetools.build_drivers_database(league)
+# jsonexport.export_to_json("test_export.json", db, results, laps)
 # fr = open("test_statistics.json","w")
 # fr.write(json.dumps(laptools.get_lap_statistics(laps,["pitted","invalid","lost control"])))
 # fr.close()
+
+print(charttools.compute_overtakes(charts))
