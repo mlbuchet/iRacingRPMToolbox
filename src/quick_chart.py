@@ -24,6 +24,10 @@ league_sessions = {"season":2, "races":
 
 league = client.get_league(7826)
 db = leaguetools.build_drivers_database(league)
+db.append({"cust_id":374266, "name":"Mat Monestier", "class":"Gold", "car_number":"1"})
+db.append({"cust_id":402390, "name":"Zeff Cosemans", "class":"Bronze", "car_number":"84"})
+db.append({"cust_id":130889, "name":"Marcus Spry", "class":"Gold", "car_number":"69"})
+db.append({"cust_id":482943, "name":"Mohammad Alhussien", "class":"Gold", "car_number":"974"})
 print("League database initialised")
 data = []
 
@@ -49,8 +53,8 @@ for driver in db:
 
 file = open("grades.csv", "w")
 for entry in grades:
-    file.write(entry["class"], ";", entry["name"], ";")
+    file.write(entry["class"]+";"+entry["name"]+";")
     for grade in entry["grades"]:
-        file.write(grade, ";")
+        file.write(grade+";")
     file.write("\n")
 file.close()
