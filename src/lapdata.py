@@ -24,7 +24,11 @@ class irLapData:
         exploited_laps = []
 
         for driver in drivers:
-            laps = self.client.get_result_lap_data(subsession_id, simsession_number, driver["cust_id"])
+            print(driver)
+            if driver["laps_complete"] > 0:
+                laps = self.client.get_result_lap_data(subsession_id, simsession_number, driver["cust_id"])
+            else:
+                laps = []
             laps_driver = {"cust_id":driver["cust_id"], "laps":[]}
             for lap in laps:
                 laps_driver["laps"].append({
