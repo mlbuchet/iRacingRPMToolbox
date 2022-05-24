@@ -24,7 +24,6 @@ class irLapData:
         exploited_laps = []
 
         for driver in drivers:
-            print(driver)
             if driver["laps_complete"] > 0:
                 laps = self.client.get_result_lap_data(subsession_id, simsession_number, driver["cust_id"])
             else:
