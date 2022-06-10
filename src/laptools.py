@@ -34,7 +34,7 @@ def compute_averages(array_laps, top = None):
         averages.append({"cust_id":laps["cust_id"], "average":compute_average(laps["laps"], top)})
     return averages
 
-def evaluate_drivers(array_laps, fraction = .5, gold_threshold = 1.007, silver_threshold = 1.01):
+def evaluate_drivers(array_laps, fraction = .5, gold_threshold = 1.007, silver_threshold = 1.012):
     '''
     Assigns a grade depending on the results from a race.
     fraction: fraction of the number of laps completed by the leader and taking into account in the computation.
