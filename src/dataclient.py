@@ -3,6 +3,8 @@ Low level encapsulation of requests to the iRacing API.
 Forked and modified from jasondilworth56's iracingdataapi.
 """
 import requests
+import hashlib
+import base64
 
 class irDataClient:
     def __init__(self, username=None, password=None):
@@ -18,7 +20,7 @@ class irDataClient:
 
         payload = {
             "email": username,
-            "password": password
+            "password": self._encode_pw(username, password)
         }
 
         r = self.session.post(self._build_url("/auth"), json=payload)
@@ -28,6 +30,11 @@ class irDataClient:
 
         self.authenticated = True
         return True
+
+    def _encode_pw(self, username, password):
+        initialHash = hashlib.sha256((password + username.lower()).encode('utf-8')).digest()
+        hashInBase64 = base64.b64encode(initialHash).decode('utf-8')
+        return hashInBase64
 
     def _build_url(self, endpoint):
         return self.base_url + endpoint
