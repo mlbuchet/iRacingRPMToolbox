@@ -2,7 +2,7 @@
 File containing the operations on the lap chart data.
 """
 
-def compute_overtakes(chart, excluded=["pitted, lost control"]):
+def compute_overtakes(chart, excluded=["pitted, lost control, car contact"]):
     """
     Computes the number of overtakes for each driver.
     The excluded field corresponds to the type of events that would lead a lap to not be considered for counting overtakes.
@@ -18,12 +18,13 @@ def compute_overtakes(chart, excluded=["pitted, lost control"]):
         # Finds all potential overtakes.
         current_lap = crossing["lap_number"]
         if current_lap == 0:
-            overtakes.append({"cust_id":crossing["cust_id"], "overtakes":0})
+            overtakes.append({"cust_id":crossing["cust_id"], "overtakes":0, "overtaken":0})
         if current_lap != 0:
             if is_valid(crossing, excluded):
                 for pot in potentials[current_lap]:
                     if pot["loss"] == crossing["cust_id"]:
                         overtakes = add_overtake(overtakes, pot["gain"])
+                        overtakes = add_overtaken(overtakes, pot["loss"])
             pots = find_overtakes(laps[current_lap-1], laps[current_lap], crossing["cust_id"])
             if len(pots) > 0:
                 for pot in pots:
@@ -52,11 +53,20 @@ def find_overtakes(prev, next, cust_id):
 
 def add_overtake(overtakes, cust_id):
     """
-    Registered a new overtake for the driver referred by cust_id
+    Registers a new overtake for the driver referred by cust_id
     """
     for entry in overtakes:
         if entry["cust_id"] == cust_id:
             entry["overtakes"] = entry["overtakes"] + 1
+    return overtakes
+
+def add_overtaken(overtakes, cust_id):
+    """
+    Registers a new overtake for the driver referred by cust_id
+    """
+    for entry in overtakes:
+        if entry["cust_id"] == cust_id:
+            entry["overtaken"] = entry["overtaken"] + 1
     return overtakes
 
 def is_valid(lap, excluded):

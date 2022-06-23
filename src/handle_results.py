@@ -11,6 +11,7 @@ import laptools
 import leaguetools
 import jsonexport
 import argparse
+import charttools
 
 parser = argparse.ArgumentParser(description='Computes statistics for a race.')
 parser.add_argument('subsession_id', type=int, help="Session ID of the race.")
@@ -28,3 +29,5 @@ league = client.get_league(results["league_id"])
 print("League retrieved")
 db = leaguetools.build_drivers_database(league)
 jsonexport.export_to_json(args.output_file, db, results, laps)
+chart = client.get_result_lap_chart_data(args.subsession_id)
+print(charttools.compute_overtakes(chart))
