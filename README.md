@@ -42,3 +42,6 @@ notes_incidents.py subsession_id output_file
 
 subsession_id: Id of the race session.
 output_file: Output file to be written.
+
+### Plot race stats
+`python src/generate_stats.py <subsession_id>`
