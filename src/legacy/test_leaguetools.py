@@ -2,7 +2,7 @@ import json
 import leaguetools
 
 def test_build_drivers_database():
-    fl = open("../test/data/league_7826.json","r")
+    fl = open("../../test/data/league_7826.json", "r")
     league = json.loads(fl.read())
     fl.close()
     assert league["league_id"] == 7826
@@ -16,7 +16,7 @@ def test_build_drivers_database():
     assert db[3]["class"] == "Bronze"
 
 def test_find_driver():
-    fl = open("../test/data/league_7826.json","r")
+    fl = open("../../test/data/league_7826.json", "r")
     league = json.loads(fl.read())
     fl.close()
     assert league["league_id"] == 7826

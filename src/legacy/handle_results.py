@@ -1,19 +1,16 @@
 """
-Script taking a subsession id from the RPM league as input and exporting a text file with all laps where incidents should be reviewed.
-Syntax: nots_incidents.py subsession_id output_file
+Script taking a subsession id from the RPM league as input and exporting the json with the collected information in the second argument.
+Syntax: handle_results.py subsession_id output_file
 """
 
-import sys
 from lapdata import irLapData
-from dataclient import irDataClient
-import credentials
+from api.dataclient import irDataClient
+from api import credentials
 import leaguetools
-import laptools
-import iotools
+import jsonexport
 import argparse
 
-
-parser = argparse.ArgumentParser(description='Notes laps with incidents to be reviewed.')
+parser = argparse.ArgumentParser(description='Computes statistics for a race.')
 parser.add_argument('subsession_id', type=int, help="Session ID of the race.")
 parser.add_argument('output_file', help="Name of the file to be written.")
 args = parser.parse_args()
@@ -28,5 +25,4 @@ print("Lapdata retrieved")
 league = client.get_league(results["league_id"])
 print("League retrieved")
 db = leaguetools.build_drivers_database(league)
-noted = laptools.select_events(laps, "car contact")
-iotools.export_noted_laps(args.output_file, noted, db)
+jsonexport.export_to_json(args.output_file, db, results, laps)

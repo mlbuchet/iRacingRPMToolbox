@@ -2,7 +2,7 @@ import json
 import laptools
 
 def test_compute_average():
-    fl = open("../test/data/test_lapdata_45166697.json","r")
+    fl = open("../../test/data/test_lapdata_45166697.json", "r")
     array_laps = json.loads(fl.read())
     fl.close()
     assert len(array_laps) == 34
@@ -13,7 +13,7 @@ def test_compute_average():
     assert laptools.compute_average(clean, 200) == None
 
 def test_compute_averages():
-    fl = open("../test/data/test_lapdata_45166697.json","r")
+    fl = open("../../test/data/test_lapdata_45166697.json", "r")
     array_laps = json.loads(fl.read())
     fl.close()
     assert len(array_laps) == 34
@@ -34,7 +34,7 @@ def test_compute_averages():
     assert averages[32]["average"] == None
 
 def test_evaluate_drivers():
-    fl = open("../test/data/test_lapdata_45166697.json","r")
+    fl = open("../../test/data/test_lapdata_45166697.json", "r")
     array_laps = json.loads(fl.read())
     fl.close()
     assert len(array_laps) == 34
@@ -60,7 +60,7 @@ def test_evaluate_drivers():
     assert evaluation[11]["grade"] == "Bronze"
 
 def test_select_events():
-    fl = open("../test/data/test_lapdata_45166697.json","r")
+    fl = open("../../test/data/test_lapdata_45166697.json", "r")
     array_laps = json.loads(fl.read())
     fl.close()
     assert len(array_laps) == 34
@@ -77,7 +77,7 @@ def test_select_events():
     assert len(car_contact) == 21
 
 def test_remove_untimed_laps():
-    fl = open("../test/data/test_lapdata_45166697.json","r")
+    fl = open("../../test/data/test_lapdata_45166697.json", "r")
     array_laps = json.loads(fl.read())
     fl.close()
     assert array_laps[0]["laps"][0]["lap_time"] == -1
@@ -89,7 +89,7 @@ def test_remove_untimed_laps():
     assert clean[1]["laps"][34]["lap_time"] > 0
 
 def test_clean_for_statistics():
-    fl = open("../test/data/test_lapdata_45166697.json","r")
+    fl = open("../../test/data/test_lapdata_45166697.json", "r")
     array_laps = json.loads(fl.read())
     fl.close()
     laps = array_laps[1]["laps"]
@@ -107,7 +107,7 @@ def test_clean_for_statistics():
     assert len(clean) == 55
 
 def test_get_lap_statistics():
-    fl = open("../test/data/test_lapdata_45166697.json","r")
+    fl = open("../../test/data/test_lapdata_45166697.json", "r")
     array_laps = json.loads(fl.read())
     fl.close()
     assert len(array_laps) == 34
@@ -120,7 +120,7 @@ def test_get_lap_statistics():
     assert driver["quartile_1_lap"] == 888007
     assert driver["quartile_3_lap"] == 892617
     assert driver["average_lap"] == 891125
-    statistics = laptools.get_lap_statistics(array_laps,[])
+    statistics = laptools.get_lap_statistics(array_laps, [])
     assert len(statistics) == 34
     driver = statistics[6]
     assert driver["cust_id"] == 491843

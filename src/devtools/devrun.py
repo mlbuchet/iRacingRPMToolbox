@@ -1,12 +1,6 @@
-from lapdata import irLapData
-from dataclient import irDataClient
-import credentials
 import json
-import laptools
-import resulttools
 import leaguetools
 import jsonexport
-import pandas
 
 """
 This file is for testing purposes. Comment the section that are not needed for your current testing.
@@ -38,13 +32,13 @@ Dumping the results locally
 '''
 Reading the results from the local testing dump
 '''
-fr = open("test_results.json","r")
+fr = open("../test_results.json", "r")
 results = json.loads(fr.read())
 fr.close()
-fd = open("test_laps.json","r")
+fd = open("../test_laps.json", "r")
 laps = json.loads(fd.read())
 fd.close()
-fd = open("test_league.json", "r")
+fd = open("../test_league.json", "r")
 league = json.loads(fd.read())
 fd.close()
 

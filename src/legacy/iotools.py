@@ -2,7 +2,6 @@
 File containing function to export data in formats other than json.
 """
 
-import pandas
 import leaguetools
 
 """
@@ -19,5 +18,5 @@ def export_noted_laps(file, noted_laps, drivers_db):
     fw = open(file, "w")
     noted_laps.sort(key=lambda x: int(x["lap_number"]))
     for lap in noted_laps:
-        fw.write(str(lap["lap_number"])+'\t'+leaguetools.find_driver(drivers_db, lap["cust_id"])["name"]+"\n")
+        fw.write(str(lap["lap_number"]) +'\t' + leaguetools.find_driver(drivers_db, lap["cust_id"])["name"] + "\n")
     fw.close()

@@ -3,7 +3,7 @@ import leaguetools
 import resulttools
 
 def test_get_qualifying_results():
-    fr = open("../test/data/result_45043469.json","r")
+    fr = open("../../test/data/result_45043469.json", "r")
     results = json.loads(fr.read())
     fr.close()
     qualy = resulttools.get_qualifying_results(results)
@@ -16,10 +16,10 @@ def test_get_qualifying_results():
     assert qualy[42]["starting_position"] == 42
 
 def test_get_race_results():
-    fr = open("../test/data/result_45043469.json","r")
+    fr = open("../../test/data/result_45043469.json", "r")
     results = json.loads(fr.read())
     fr.close()
-    fl = open("../test/data/league_7826.json","r")
+    fl = open("../../test/data/league_7826.json", "r")
     league = json.loads(fl.read())
     fl.close()
     db = leaguetools.build_drivers_database(league)

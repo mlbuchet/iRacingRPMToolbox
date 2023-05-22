@@ -1,6 +1,3 @@
-from dataclient import irDataClient
-import json
-
 """
 Encapsulates the low level interface to the API for functions that need multiple requests.
 """
