@@ -4,3 +4,4 @@ argparse
 matplotlib
 seaborn
 click
+httpx
