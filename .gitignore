@@ -131,4 +131,4 @@ dmypy.json
 # Some files that should not be loaded
 /token
 /test.sh
-
+/briefcase
